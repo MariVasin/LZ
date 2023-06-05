@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.20;
+pragma solidity >=0.8.17;
 
-import "https://github.com/LayerZero-Labs/solidity-examples/tree/36580de4a0f8089960c7c3d44ca614d460b8c5fc/contracts/interfaces";
+import "https://github.com/LayerZero-Labs/solidity-examples/blob/36580de4a0f8089960c7c3d44ca614d460b8c5fc/contracts/lzApp/LzApp.sol";
 import "https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/lzApp/NonblockingLzApp.sol";
 import "https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/util/BitLib.sol";
 import "https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/util/BytesLib.sol";
@@ -36,9 +36,11 @@ abstract contract LayerZero is NonblockingLzApp {
     }
 
     function trustAddress(address _otherContract) public onlyOwner {
-        trustedRemoteLookup[destChainId] = abi.encodePacked(_otherContract, address(this)); 
+        trustedRemoteLookup[destChainId] = abi.encodePacked(_otherContract, address(this));
+    }
 
     function setTrustedRemote(_remoteChainId, _path); {
         trustedRemoteLookup(_remoteChainId, _path);
+        emit SetTrustedRemote(_remoteChainId, _path);
     }    
 }
