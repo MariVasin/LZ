@@ -20,8 +20,20 @@ import "https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/
 abstract contract LayerZero is NonblockingLzApp {
     string public data = "Nothing received yet";
     uint16 destChainId;
-    
-    constructor(address _lzEndpoint) NonblockingLzApp(_lzEndpoint) {
+    using BytesLib for bytes;
+    uint constant public DEFAULT_PAYLOAD_SIZE_LIMIT = 10000;
+    ILayerZeroEndpoint public immutable lzEndpoint;
+    mapping(uint16 => bytes) public trustedRemoteLookup;
+    mapping(uint16 => mapping(uint16 => uint)) public minDstGasLookup;
+    mapping(uint16 => uint) public payloadSizeLimitLookup;
+    address public precrime;
+
+    event SetPrecrime(address precrime);
+    event SetTrustedRemote(uint16 _remoteChainId, bytes _path);
+    event SetTrustedRemoteAddress(uint16 _remoteChainId, bytes _remoteAddress);
+    event SetMinDstGas(uint16 _dstChainId, uint16 _type, uint _minDstGas);
+   
+   constructor(address _lzEndpoint) NonblockingLzApp(_lzEndpoint) {
         if (_lzEndpoint == 0x3c2269811836af69497E5F486A85D7316753cf62) destChainId = 167;
         if (_lzEndpoint == 0x7004396C99D5690da76A7C59057C5f3A53e01704) destChainId = 102;
     }
