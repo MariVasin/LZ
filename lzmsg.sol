@@ -16,7 +16,6 @@ import "https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/
       contract: 0x2F9fEe4174F65deDa594f541DCCB2F7FB9E3dEf4
 */
 
-
 abstract contract LayerZero is NonblockingLzApp {
     string public data = "Nothing received yet";
     uint16 destChainId;
