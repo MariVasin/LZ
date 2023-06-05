@@ -1,5 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.20;
+
+import "https://github.com/LayerZero-Labs/solidity-examples/tree/36580de4a0f8089960c7c3d44ca614d460b8c5fc/contracts/interfaces";
+import "https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/lzApp/NonblockingLzApp.sol";
+import "https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/util/BitLib.sol";
+import "https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/util/BytesLib.sol";
+import "https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/util/ExcessivelySafeCall.sol";
+import "https://github.com/LayerZero-Labs/solidity-examples/blob/main/contracts/libraries/LzLib.sol";
 /*
     LayerZero BNB
       lzChainId:102 lzEndpoint:0x3c2269811836af69497E5F486A85D7316753cf62
@@ -10,7 +17,7 @@ pragma solidity >=0.8.20;
 */
 
 
-contract LayerZero is NonblockingLzApp {
+abstract contract LayerZero is NonblockingLzApp {
     string public data = "Nothing received yet";
     uint16 destChainId;
     
@@ -29,9 +36,9 @@ contract LayerZero is NonblockingLzApp {
     }
 
     function trustAddress(address _otherContract) public onlyOwner {
-        trustedRemoteLookup[destChainId] = abi.encodePacked(_otherContract, address(this));   
-    }
-    function setTrustedRemote(uint16 _remoteChainId, bytes calldata _path) public onlyOwner {
-         trustedRemoteLookup[_remoteChainId] = _path;   
+        trustedRemoteLookup[destChainId] = abi.encodePacked(_otherContract, address(this)); 
+
+    function setTrustedRemote(_remoteChainId, _path); {
+        trustedRemoteLookup(_remoteChainId, _path);
     }    
 }
